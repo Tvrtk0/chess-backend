@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { MongooseModule } from '@nestjs/mongoose'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { configuration } from './config/configuration'
-import { PuzzleController } from './modules/puzzle/puzzle.controller'
 import { PuzzleModule } from './modules/puzzle/puzzle.module'
 
 @Module({
@@ -13,9 +13,10 @@ import { PuzzleModule } from './modules/puzzle/puzzle.module'
       load: [configuration],
       isGlobal: true,
     }),
+    MongooseModule.forRoot(process.env.DATABASE_HOST),
     PuzzleModule,
   ],
-  controllers: [AppController, PuzzleController],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
