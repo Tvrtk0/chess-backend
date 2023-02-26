@@ -7,7 +7,12 @@ import { Puzzle } from './interface/puzzle.interface'
 export class PuzzleService {
   constructor(@InjectModel('puzzles') private readonly puzzleModel: Model<Puzzle>) {}
 
-  async findOne(gt: number, lt: number): Promise<Puzzle[]> {
-    return await this.puzzleModel.aggregate([{ $match: { rating: { $gt: gt, $lt: lt } } }, { $sample: { size: 1 } }])
+  async findOne(id: string) {
+    return await this.puzzleModel.findOne({ puzzleId: id })
+  }
+
+  async findOneRandom(gt: number, lt: number): Promise<Puzzle> {
+    const p = await this.puzzleModel.aggregate([{ $match: { rating: { $gt: gt, $lt: lt } } }, { $sample: { size: 1 } }])
+    return p[0]
   }
 }
