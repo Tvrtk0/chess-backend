@@ -5,12 +5,14 @@ export interface SetPuzzle {
   solved: boolean
 }
 
-export interface SetPuzzles {
-  id: number
+export interface Set {
   setPuzzles: SetPuzzle[]
+  solvingTime: number[]
+  timesPlayed: number
 }
 
-export interface Set {
-  solvingTime: string
-  setPuzzles: SetPuzzles
+export class CreateSetDto {
+  rating: number
+  size: number
+  email: string
 }
