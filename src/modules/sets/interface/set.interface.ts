@@ -1,3 +1,5 @@
+import mongoose from 'mongoose'
+
 export interface SetPuzzle {
   puzzleId: string
   rating: number
@@ -9,6 +11,7 @@ export interface Set {
   setPuzzles: SetPuzzle[]
   solvingTime: number[]
   timesPlayed: number
+  _id: mongoose.Types.ObjectId
 }
 
 export class CreateSetDto {
