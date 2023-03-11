@@ -5,6 +5,7 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { configuration } from './config/configuration'
 import { PuzzleModule } from './modules/puzzle/puzzle.module'
+import { SetModule } from './modules/sets/set.module'
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { PuzzleModule } from './modules/puzzle/puzzle.module'
     }),
     MongooseModule.forRoot(process.env.DATABASE_HOST),
     PuzzleModule,
+    SetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
