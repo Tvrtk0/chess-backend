@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose'
+import { Model, Types } from 'mongoose'
 import { Puzzle } from '../puzzle/interface/puzzle.interface'
 import { CreateSetDto, Set, SetPuzzle } from './interface/set.interface'
 
@@ -11,8 +11,13 @@ export class SetService {
     @InjectModel('puzzles') private readonly puzzleModel: Model<Puzzle>
   ) {}
 
-  async findAll(id: string): Promise<Set[]> {
-    return await this.setModel.findById(id)
+  async findAll(setIds: Types.ObjectId[]): Promise<Set[]> {
+    const sets = await Promise.all(
+      setIds.map(async id => {
+        return (await this.setModel.findById(id)) as Set
+      })
+    )
+    return sets
   }
 
   async remove(id: string) {

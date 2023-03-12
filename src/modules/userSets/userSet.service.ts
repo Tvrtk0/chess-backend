@@ -10,13 +10,17 @@ export class UserSetService {
     @InjectModel('users') private readonly userModel: Model<UserSet>
   ) {}
 
+  public async getSets(id: string) {
+    const userSets = await this.userSetModel.findOne({ userId: id })
+    return userSets.puzzleSets
+  }
+
   public async update(userSetDto: CreateUserSetDto) {
     const { puzzleSet, email } = userSetDto
     const user = await this.userModel.findOne({ email: email })
     const userSet = await this.userSetModel.findOneAndUpdate({ userId: user._id })
 
-    await userSet.puzzleSets.push(puzzleSet._id)
-
+    userSet.puzzleSets.push(puzzleSet._id)
     userSet.save()
   }
 }

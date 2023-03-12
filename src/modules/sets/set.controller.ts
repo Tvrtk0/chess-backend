@@ -9,7 +9,9 @@ export class SetController {
 
   @Get(':id')
   async findAll(@Param('id') id: string): Promise<Set[]> {
-    return this.setService.findAll(id)
+    const setIds = await this.userSetService.getSets(id)
+    const sets = await this.setService.findAll(setIds)
+    return sets
   }
 
   @Post()
