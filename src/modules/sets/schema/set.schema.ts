@@ -11,4 +11,4 @@ export const SetSchema = new mongoose.Schema({
   ],
   solvingTime: [Number],
   timesPlayed: Number,
-})
+}).set('timestamps', true)
