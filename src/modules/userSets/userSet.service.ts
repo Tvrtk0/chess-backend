@@ -10,8 +10,9 @@ export class UserSetService {
     @InjectModel('users') private readonly userModel: Model<UserSet>
   ) {}
 
-  public async getSets(id: string) {
-    const userSets = await this.userSetModel.findOne({ userId: id })
+  public async getSets(email: string) {
+    const user = await this.userModel.findOne({ email: email })
+    const userSets = await this.userSetModel.findOne({ userId: user._id })
     return userSets.puzzleSets
   }
 

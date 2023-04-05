@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { UserSetService } from '../userSets/userSet.service'
 import { CreateSetDto, Set } from './interface/set.interface'
 import { SetService } from './set.service'
@@ -8,8 +8,13 @@ export class SetController {
   constructor(private readonly setService: SetService, private readonly userSetService: UserSetService) {}
 
   @Get(':id')
-  async findAll(@Param('id') id: string): Promise<Set[]> {
-    const setIds = await this.userSetService.getSets(id)
+  async findOne(@Param('id') id: string) {
+    return await this.setService.findOne(id)
+  }
+
+  @Get('all/:email')
+  async findAll(@Param('email') email: string): Promise<Set[]> {
+    const setIds = await this.userSetService.getSets(email)
     const sets = await this.setService.findAll(setIds)
     return sets
   }
@@ -24,5 +29,10 @@ export class SetController {
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return this.setService.remove(id)
+  }
+
+  @Put()
+  async update(@Body() set: Set) {
+    return this.setService.update(set)
   }
 }

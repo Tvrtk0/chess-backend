@@ -11,6 +11,10 @@ export class SetService {
     @InjectModel('puzzles') private readonly puzzleModel: Model<Puzzle>
   ) {}
 
+  async findOne(id: string): Promise<Set> {
+    return await this.setModel.findById(id)
+  }
+
   async findAll(setIds: Types.ObjectId[]): Promise<Set[]> {
     const sets = await Promise.all(
       setIds.map(async id => {
@@ -24,11 +28,17 @@ export class SetService {
     return this.setModel.deleteOne({ _id: id })
   }
 
+  async update(set: Set) {
+    await this.setModel.findByIdAndUpdate(set._id, set)
+    return this.setModel.findById(set._id)
+  }
+
   async createSet(createSetDto: CreateSetDto): Promise<Set> {
     const { rating, size } = createSetDto
     const minRating = rating - 100
     const maxRating = rating + 100
 
+    // TODO: fix ratio of puzzle ratings
     const puzzle = await this.puzzleModel.aggregate<Puzzle>([
       { $match: { rating: { $gt: minRating, $lt: maxRating } } },
       { $sample: { size: size } },
