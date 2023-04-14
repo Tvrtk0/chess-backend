@@ -5,6 +5,7 @@ export const SetSchema = new mongoose.Schema({
     {
       puzzleId: String,
       rating: Number,
+      themes: String,
       played: Boolean,
       solved: Boolean,
     },

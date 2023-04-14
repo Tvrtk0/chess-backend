@@ -50,6 +50,7 @@ export class SetService {
           played: false,
           puzzleId: p.puzzleId,
           rating: p.rating,
+          themes: p.themes,
           solved: false,
         } as SetPuzzle
       })

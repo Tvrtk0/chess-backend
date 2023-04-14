@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 export interface SetPuzzle {
   puzzleId: string
   rating: number
+  themes: string
   played: boolean
   solved: boolean
 }
