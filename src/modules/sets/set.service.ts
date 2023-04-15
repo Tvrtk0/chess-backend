@@ -33,6 +33,13 @@ export class SetService {
     return this.setModel.findById(set._id)
   }
 
+  async updateSetPuzzle(setId: string, puzzleId: string, solved: boolean) {
+    return await this.setModel.updateOne(
+      { _id: setId, 'setPuzzles.puzzleId': puzzleId },
+      { $set: { 'setPuzzles.$.solved': solved, 'setPuzzles.$.played': true } }
+    )
+  }
+
   async createSet(createSetDto: CreateSetDto): Promise<Set> {
     const { rating, size } = createSetDto
     const minRating = rating - 100

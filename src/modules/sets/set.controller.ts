@@ -35,4 +35,13 @@ export class SetController {
   async update(@Body() set: Set) {
     return this.setService.update(set)
   }
+
+  @Put('/:setId/:puzzleId')
+  async updateSetPuzzle(
+    @Param('setId') setId: string,
+    @Param('puzzleId') puzzleId: string,
+    @Body() puzzleDto: { solved: boolean }
+  ) {
+    return this.setService.updateSetPuzzle(setId, puzzleId, puzzleDto.solved)
+  }
 }
