@@ -24,4 +24,9 @@ export class UserSetService {
     userSet.puzzleSets.push(puzzleSet._id)
     userSet.save()
   }
+
+  public async removeSet(email: string, setId: string) {
+    const user = await this.userModel.findOne({ email: email })
+    return await this.userSetModel.updateOne({ userId: user._id }, { $pull: { puzzleSets: setId } })
+  }
 }

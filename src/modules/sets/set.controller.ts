@@ -26,14 +26,20 @@ export class SetController {
     return set
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string) {
+  @Delete(':email/:id')
+  async remove(@Param('email') email: string, @Param('id') id: string) {
+    this.userSetService.removeSet(email, id)
     return this.setService.remove(id)
   }
 
   @Put()
   async update(@Body() set: Set) {
     return this.setService.update(set)
+  }
+
+  @Put('/reset/:setId')
+  async resetSet(@Param('setId') setId: string) {
+    return this.setService.resetSet(setId)
   }
 
   @Put('/:setId/:puzzleId')

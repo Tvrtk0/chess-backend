@@ -40,6 +40,10 @@ export class SetService {
     )
   }
 
+  async resetSet(setId: string) {
+    return await this.setModel.updateOne({ _id: setId }, { $set: { 'setPuzzles.$[].played': false } })
+  }
+
   async createSet(createSetDto: CreateSetDto): Promise<Set> {
     const { rating, size } = createSetDto
     const minRating = rating - 100
